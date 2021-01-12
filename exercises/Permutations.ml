@@ -7,9 +7,9 @@
 open Monads.Nondeterminism
 
 (* sujet
-let rec insert x l = failwith ""
+let rec insert x l = failwith "NYI"
 
-let rec permut l = failwith ""
+let rec permut l = failwith "NYI"
    /sujet *)
 
 (* corrige *)

@@ -1,9 +1,8 @@
 (* sujet
 (* Once you are done writing the code, remove this directive,
    whose purpose is to disable several warnings. *)
-[@@@warning "-27-32-37-39"]
+[@@@warning "-20-27-32-37-39"]
   /sujet *)
-open Monads.Error
 
 type value =
   | IsNat of int
@@ -16,9 +15,16 @@ type exp =
   | Ifte of exp * exp * exp
 
 (* sujet
+let ( let* ) = failwith "NYI: bring me in scope!"
+let return = failwith "NYI: bring me in scope!"
+let run = failwith "NYI: bring me in scope!"
+
 let rec sem e = failwith "NYI"
    /sujet *)
+
 (* corrige *)
+open Monads.Error
+
 let failure () = err (Failure "Ill-typed expression")
 
 let takeNat = function IsNat n -> return n | IsBool _ -> failure ()
@@ -43,7 +49,6 @@ let rec sem e =
       let* vb = sem b in
       let* b = takeBool vb in
       if b then sem e1 else sem e2
-
 
 (* /corrige *)
 
@@ -79,16 +84,16 @@ let%test _ =
 
 (** ** Ill-typed expressions *)
 
-let%test_unit _ =
-  run
-    (try_with_finally
-       (sem (Plus (Val (IsBool true), Val (IsNat 3))))
-       (fun _ -> err (Failure "Unreachable execution point."))
-       (fun _ -> return ()))
+let%test _ =
+  try
+    ignore(run (sem (Plus (Val (IsBool true), Val (IsNat 3)))));
+    false
+  with
+    _ -> true
 
-let%test_unit _ =
-  run
-    (try_with_finally
-       (sem (Ifte (Val (IsNat 3), Val (IsNat 42), Val (IsNat 44))))
-       (fun _ -> err (Failure "Unreachable execution point."))
-       (fun _ -> return ()))
+let%test _ =
+  try
+    ignore (run (sem (Ifte (Val (IsNat 3), Val (IsNat 42), Val (IsNat 44)))));
+    false
+  with
+    _ -> true

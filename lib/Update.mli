@@ -2,12 +2,7 @@ open Monoid
 
 module Make
          (P: Monoid)
-         (S: sig
-              (* TODO: could I move this nicely into Monoid.ml? *)
-              type t
-              val init : t
-              val act : t -> P.t -> t
-            end) : sig
+         (S: MonoidAction with type m = P.t) : sig
 
 type 'a t 
 

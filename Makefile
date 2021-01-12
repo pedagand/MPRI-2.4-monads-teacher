@@ -1,7 +1,5 @@
-include Makefile
-
 DST  := ../lecture-MPRI24-monads-public
-ROOT := dune-project 
+ROOT := dune-project runtest.sh
 SRC  := $(shell git ls-files lib/ exercises/)
 
 .PHONY: export
@@ -10,8 +8,7 @@ export:
 	@ dune runtest
 # Recreate the destination directory from scratch.
 	@ rm -rf $(DST)
-	@ mkdir $(DST) $(DST)/lib
-	@ mkdir $(DST) $(DST)/exercises
+	@ mkdir $(DST) $(DST)/lib $(DST)/exercises
 # Copy the files that must reside at the root.
 	@ cp $(ROOT) $(DST)
 # Copy the source files.
@@ -21,4 +18,4 @@ export:
 # Compile the code that is given to the students.
 	@ cd $(DST); dune build
 # Show what we have done.
-	ls $(DST)
+	ls $(DST) $(DST)/lib $(DST)/exercises

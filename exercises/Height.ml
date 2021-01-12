@@ -1,3 +1,9 @@
+(* sujet
+(* Once you are done writing the code, remove this directive,
+   whose purpose is to disable several warnings. *)
+[@@@warning "-20-27-32-33-37-39"]
+  /sujet *)
+
 open Monads
 
 (* Taken from
@@ -5,9 +11,6 @@ open Monads
      Jean-Christophe Filliâtre
      https://hal.archives-ouvertes.fr/hal-02315541/
  *)
-
-module M = Continuation.Make(struct type t = int end)
-open M
 
 type tree = E | N of tree * tree
 
@@ -23,9 +26,14 @@ let make_list =
   help E
 
 let%test _ =
+  (* Note: [height] is not tail-rec *)
   let res = try height (make_list 1000000) with | _ -> -1
   in res = -1
 
+module M = Continuation.Make(struct type t = int end)
+open M
+
+(* corrige *)
 (* XXX: this is a real bummer *)
 (* https://discuss.ocaml.org/t/what-is-the-use-of-continuation-passing-style-cps/4491/16 *)
 let rec hcpsauxnaive (t: tree) : int t = match t with
@@ -53,6 +61,13 @@ let hcpsaux hcpsrec (t: tree) : int t = match t with
 let hcpsaux = tfix hcpsaux
 
 let hcps t = run (hcpsaux t)
+(* /corrige *)
+
+(* sujet 
+let hcpsaux = failwith "NYI"
+
+let hcps t = run (hcpsaux t)
+   /sujet*)
 
 let%test _ = hcps E = 0
 let%test _ = hcps (N (E, E)) = 1

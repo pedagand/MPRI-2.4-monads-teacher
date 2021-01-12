@@ -3,3 +3,10 @@ module type Monoid = sig
   val empty : t
   val ( <+> ) : t -> t -> t
 end
+
+module type MonoidAction = sig
+  type m
+  type t
+  val init : t
+  val act : t -> m -> t
+end

@@ -17,6 +17,8 @@ let exfalso () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
+let botElim (b: bot) = match b with _ -> .
+
 let exfalso () =
-  callcc (fun k -> k (Error (fun a -> k (Ok a))))
+  callcc (fun k -> botElim (k (Error (fun a -> k (Ok a)))))
 (* /corrige *)

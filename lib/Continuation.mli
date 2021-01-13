@@ -17,7 +17,7 @@ val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 
 (* Operations *)
 
-val callcc : (('a -> Ans.t) -> Ans.t) -> 'a t
+val callcc : (('a -> Ans.t) -> 'a t) -> 'a t
 
 val throw : 'a t -> ('a -> Ans.t) -> 'a t
 

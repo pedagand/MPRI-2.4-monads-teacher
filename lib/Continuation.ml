@@ -40,7 +40,7 @@ module Make (Ans:
      /sujet *)
      
   (* corrige *)
-  let callcc f = fun k -> f (fun v -> k v)
+  let callcc f = fun k -> f k k
 
   let throw m k' = fun _ -> m k'
 

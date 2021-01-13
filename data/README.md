@@ -50,11 +50,11 @@ order:
   1. `lib/Continuation.ml`
   1. `exercises/Height.ml`
   1. `exercises/Logic.ml`
+  1. `lib/Reader.ml`
+  1. `lib/Writer.ml`
+  1. `exercises/Logger.ml`
   1. `lib/Update.ml`
   1. `exercises/Bank.ml`
   1. `exercises/Dice.ml`
-  1. `lib/Writer.ml`
-  1. `exercises/Logger.ml`
   1. `exercises/Writer.ml`
-  1. `lib/Reader.ml`
   1. `exercises/Reader.ml`

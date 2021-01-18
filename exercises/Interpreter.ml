@@ -3,6 +3,7 @@
    whose purpose is to disable several warnings. *)
 [@@@warning "-20-27-32-37-39"]
   /sujet *)
+[@@@warning "-38"]
 
 type value =
   | IsNat of int
@@ -13,6 +14,8 @@ type exp =
   | Eq of exp * exp
   | Plus of exp * exp
   | Ifte of exp * exp * exp
+
+exception IllTyped
 
 (* sujet
 let ( let* ) _ _ = failwith "NYI: bring me in scope!"
@@ -25,7 +28,7 @@ let rec sem e = failwith "NYI"
 (* corrige *)
 open Monads.Error
 
-let failure () = err (Failure "Ill-typed expression")
+let failure () = err IllTyped
 
 let take_nat = function IsNat n -> return n | IsBool _ -> failure ()
 
@@ -94,11 +97,13 @@ let%test _ =
     ignore(run (sem (Plus (Val (IsBool true), Val (IsNat 3)))));
     false
   with
-    _ -> true
+  | IllTyped -> true
+  | _ -> false
 
 let%test _ =
   try
     ignore (run (sem (Ifte (Val (IsNat 3), Val (IsNat 42), Val (IsNat 44)))));
     false
   with
-    _ -> true
+  | IllTyped -> true
+  | _ -> false

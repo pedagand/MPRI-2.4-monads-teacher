@@ -39,5 +39,5 @@ let err e = Err e
 
 let try_with_finally m ks kf = match m with OK x -> ks x | Err e -> kf e
 
-let run m = match m with OK x -> x | Err _ -> failwith "Uncaught exception"
+let run m = match m with OK x -> x | Err e -> raise e
 (* /corrige *)

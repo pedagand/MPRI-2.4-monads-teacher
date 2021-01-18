@@ -68,11 +68,20 @@ let hex_digit () =
 (* /corrige *)
 
 let%test _ = run (symbol 'c') ['c'] = ()
-let%test _ = try ignore(run (symbol 'c') ['d']); false with | _ -> true
+let%test _ =
+  try
+    (* XXX: this also fails when NYI *)
+    ignore(run (symbol 'c') ['d']); false
+  with
+  | _ -> true
 
 let%test _ = List.for_all (fun c -> run (hex_digit ()) [c] = c) hexCharset
 let%test _ =
-  try ignore(run (hex_digit ()) ['A']); false  with
+  try
+    (* XXX: this also fails when NYI *)
+    ignore(run (hex_digit ()) ['A']);
+    false
+  with
   | _ -> true
 
 
@@ -96,7 +105,11 @@ let%test _ = run (plus (symbol 'a')) ['a'; 'b'] = [()]
 
 let%test _ = run (plus (symbol 'a')) ['a'; 'a'; 'b'] = [(); ()]
 
-let%test _ = try ignore(run (plus (symbol 'a')) ['b'; 'a'; 'b']); false with _ -> true
+let%test _ =
+  try
+    (* XXX: this also fails when NYI *)
+    ignore(run (plus (symbol 'a')) ['b'; 'a'; 'b']); false
+  with _ -> true
 
 let%test _ = run (star (symbol 'a')) ['a'; 'b'] = [()]
 
@@ -143,6 +156,7 @@ let%test _ =
 
 let%test _ =
   try
+    (* XXX: this also fails when NYI *)
     ignore(run (hex_number ()) (to_list ""));
     false
   with
@@ -279,6 +293,7 @@ let%test _ =
 
 let%test _ =
   try
+    (* XXX: this also fails when NYI *)
     ignore (run (parse_region ()) (to_list "08058000-0805b000 rwxp 00000000 00:00 0 "));
     false
   with _ -> true

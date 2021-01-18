@@ -15,9 +15,9 @@ type exp =
   | Ifte of exp * exp * exp
 
 (* sujet
-let ( let* ) = failwith "NYI: bring me in scope!"
-let return = failwith "NYI: bring me in scope!"
-let run = failwith "NYI: bring me in scope!"
+let ( let* ) _ _ = failwith "NYI: bring me in scope!"
+let return _ = failwith "NYI: bring me in scope!"
+let run _ = failwith "NYI: bring me in scope!"
 
 let rec sem e = failwith "NYI"
    /sujet *)

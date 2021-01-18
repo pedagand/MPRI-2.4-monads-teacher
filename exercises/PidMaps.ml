@@ -50,7 +50,7 @@ let symbol c = failwith "NYI"
 
 let rec oneOf l = failwith "NYI"
 
-let hexDigit = failwith "NYI"
+let hexDigit () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
@@ -63,16 +63,16 @@ let rec oneOf l = match l with
   | [] -> fail ()
   | c :: l -> either (let* _ = symbol c in return c) (oneOf l)
 
-let hexDigit =
+let hexDigit () =
   oneOf hexCharset
 (* /corrige *)
 
 let%test _ = run (symbol 'c') ['c'] = ()
 let%test _ = try ignore(run (symbol 'c') ['d']); false with | _ -> true
 
-let%test _ = List.for_all (fun c -> run hexDigit [c] = c) hexCharset
+let%test _ = List.for_all (fun c -> run (hexDigit ()) [c] = c) hexCharset
 let%test _ =
-  try ignore(run hexDigit ['A']); false  with
+  try ignore(run (hexDigit ()) ['A']); false  with
   | _ -> true
 
 
@@ -106,44 +106,44 @@ let%test _ = run (star (symbol 'a')) ['b'; 'a'; 'b'] = []
 
 let%test _ =
   let ex = ['0'; '8'; '0'; '5'; '8'; '0'; '0'; '0'] in
-  run (plus hexDigit) ex = ex
+  run (plus (hexDigit ())) ex = ex
 
 let%test _ =
   let ex = ['0'; '8'; '0'; '5'; 'b'; '0'; '0'; '0'] in
-  run (plus hexDigit) ex = ex
+  run (plus (hexDigit ())) ex = ex
 
 (******************************************************************)
 
 (* sujet
-let hexNumber = failwith "NYI"
+let hexNumber () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let hexNumber =
-  let* s = plus hexDigit in
+let hexNumber () =
+  let* s = plus (hexDigit ()) in
   return (hex_to_string s)
 (* /corrige *)
 
 let%test _ =
-  run hexNumber (to_list "08058000") = "0x08058000"
+  run (hexNumber ()) (to_list "08058000") = "0x08058000"
 let%test _ =
-  run hexNumber (to_list "0805b000") = "0x0805b000"
+  run (hexNumber ()) (to_list "0805b000") = "0x0805b000"
 
 let%test _ =
-  run hexNumber (to_list "0") = "0x0"
+  run (hexNumber ()) (to_list "0") = "0x0"
 
 let%test _ =
-  run hexNumber (to_list "1") = "0x1"
+  run (hexNumber ()) (to_list "1") = "0x1"
 
 let%test _ =
-  run hexNumber (to_list "01234567") = "0x01234567"
+  run (hexNumber ()) (to_list "01234567") = "0x01234567"
 
 let%test _ =
-  run hexNumber (to_list "89abcdef") = "0x89abcdef"
+  run (hexNumber ()) (to_list "89abcdef") = "0x89abcdef"
 
 let%test _ =
   try
-    ignore(run hexNumber (to_list ""));
+    ignore(run (hexNumber ()) (to_list ""));
     false
   with
   | _ -> true
@@ -151,34 +151,34 @@ let%test _ =
 (******************************************************************)
 
 (* sujet
-let parseAddress = failwith "NYI"
+let parseAddress () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let parseAddress =
-  let* b = hexNumber in
+let parseAddress () =
+  let* b = hexNumber () in
   let* _ = symbol '-' in
-  let* e = hexNumber in
+  let* e = hexNumber () in
   return (b, e)
 (* /corrige *)
 
 let%test _ =
-  run parseAddress (to_list "08058000-0805b000") = ("0x08058000","0x0805b000")
+  run (parseAddress ()) (to_list "08058000-0805b000") = ("0x08058000","0x0805b000")
 
 let%test _ =
-  run parseAddress (to_list "0-1") = ("0x0", "0x1")
+  run (parseAddress ()) (to_list "0-1") = ("0x0", "0x1")
 
 let%test _ =
-  run parseAddress (to_list "01234567-89abcdef") = ("0x01234567", "0x89abcdef")
+  run (parseAddress ()) (to_list "01234567-89abcdef") = ("0x01234567", "0x89abcdef")
 
 (******************************************************************)
 
 (* sujet
-let parsePerms = failwith "NYI"
+let parsePerms () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let parsePerms =
+let parsePerms () =
   let* r = any () in
   let* w = any () in
   let* x = any () in
@@ -187,72 +187,72 @@ let parsePerms =
 (* /corrige *)
 
 let%test _ =
-  run parsePerms (to_list "rwxp") = (true, true, true, 'p')
+  run (parsePerms ()) (to_list "rwxp") = (true, true, true, 'p')
 
 let%test _ =
-  run parsePerms (to_list "r-xp") = (true, false, true, 'p')
+  run (parsePerms ()) (to_list "r-xp") = (true, false, true, 'p')
 
 let%test _ =
-  run parsePerms (to_list "r-xs") = (true, false, true, 's')
+  run (parsePerms ()) (to_list "r-xs") = (true, false, true, 's')
 
 (******************************************************************)
 
 (* sujet
-let parseDevice = failwith "NYI"
+let parseDevice () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let parseDevice =
-  let* maj = hexNumber in
+let parseDevice () =
+  let* maj = hexNumber () in
   let* _ = symbol ':' in
-  let* min = hexNumber in
+  let* min = hexNumber () in
   return (maj, min)
 (* /corrige *)
 
 let%test _ =
-  run parseDevice (to_list "03:0c") = ("0x03", "0x0c")
+  run (parseDevice ()) (to_list "03:0c") = ("0x03", "0x0c")
 
 (******************************************************************)
 
 (* sujet
-let parsePath = failwith "NYI"
+let parsePath () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let parsePath =
+let parsePath () =
   let* _ = plus (symbol ' ') in
   let* cs = plus (any ()) in
   return (String.concat "" (List.map Char.escaped cs))
 (* /corrige *)
 
 let%test _ =
-  run parsePath (to_list " /usr/sbin/gpm") = "/usr/sbin/gpm"
+  run (parsePath ()) (to_list " /usr/sbin/gpm") = "/usr/sbin/gpm"
 
 let%test _ =
-  run parsePath (to_list "     /usr/sbin/gpm") = "/usr/sbin/gpm"
+  run (parsePath ()) (to_list "     /usr/sbin/gpm") = "/usr/sbin/gpm"
 
 (******************************************************************)
 
 (* sujet
-let parseRegion = failwith "NYI"
+let parseRegion () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let parseRegion =
-  let* addr = parseAddress in
+let parseRegion () =
+  let* addr = parseAddress () in
 
   let* _= symbol ' ' in
-  let* perm = parsePerms in
+  let* perm = parsePerms () in
   let* _ = symbol ' ' in
-  let* offset = hexNumber in
+  let* offset = hexNumber () in
   let* _ = symbol ' ' in
-  let* dev = parseDevice in
+  let* dev = parseDevice () in
   let* _ = symbol ' ' in
-  let* inode = hexNumber in
+  let* inode = hexNumber () in
   let* path = 
     either 
       (let* _ = symbol ' ' in
-       parsePath)
+       parsePath ())
       (let* _ = empty() in
        return "")
   in
@@ -260,7 +260,7 @@ let parseRegion =
 (* /corrige *)
 
 let%test _ =
-  run parseRegion (to_list "08048000-08056000 r-xp 00000000 03:0c 64593      /usr/sbin/gpm") =
+  run (parseRegion ()) (to_list "08048000-08056000 r-xp 00000000 03:0c 64593      /usr/sbin/gpm") =
     (("0x08048000", "0x08056000"),
      (true, false, true, 'p'),
      "0x00000000",
@@ -269,7 +269,7 @@ let%test _ =
      "/usr/sbin/gpm")
 
 let%test _ =
-  run parseRegion (to_list "08058000-0805b000 rwxp 00000000 00:00 0") =
+  run (parseRegion ()) (to_list "08058000-0805b000 rwxp 00000000 00:00 0") =
     (("0x08058000", "0x0805b000"),
      (true, true, true, 'p'),
      "0x00000000",
@@ -279,7 +279,7 @@ let%test _ =
 
 let%test _ =
   try
-    ignore (run parseRegion (to_list "08058000-0805b000 rwxp 00000000 00:00 0 "));
+    ignore (run (parseRegion ()) (to_list "08058000-0805b000 rwxp 00000000 00:00 0 "));
     false
   with _ -> true
     
@@ -289,4 +289,4 @@ let inputs =
     "7fb91563e000-7fb9157ca000 r-xp 00057000 fe:01 262607                     /lib/systemd/libsystemd-shared-247.so (deleted)"]
 
 let%test_unit _ = 
-  inputs |> List.iter (fun l -> ignore (run parseRegion (to_list l)))
+  inputs |> List.iter (fun l -> ignore (run (parseRegion ()) (to_list l)))

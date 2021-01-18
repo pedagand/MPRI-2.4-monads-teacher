@@ -53,13 +53,13 @@ end
 open Transaction
 
 (* sujet
-let ( let* ) = failwith "NYI: bring me in scope!"
-let get = failwith "NYI: bring me in scope!"
-let run = failwith "NYI: bring me in scope!"
+let ( let* ) _ _ = failwith "NYI: bring me in scope!"
+let get _ = failwith "NYI: bring me in scope!"
+let run _ = failwith "NYI: bring me in scope!"
 
 let deposit s = failwith "NYI"
 let withdraw s = failwith "NYI"
-let applyInterest = failwith "NYI"
+let applyInterest () = failwith "NYI"
    /sujet*)
 
 (* corrige *)
@@ -68,17 +68,17 @@ open M
 
 let deposit s = set (Deposit (s, EndOfTransaction))
 let withdraw s = set (Withdraw (s, EndOfTransaction))
-let applyInterest = set (ApplyInterest EndOfTransaction)
+let applyInterest () = set (ApplyInterest EndOfTransaction)
 (* /corrige *)
 
-let useATM =
+let useATM () =
   let* _ = deposit 20 in
   let* _ = deposit 30 in
-  let* _ = applyInterest in
+  let* _ = applyInterest () in
   let* _ = withdraw 10 in
   get ()
 
 let%test _ =
-  let (receipt, balance) = run useATM in
+  let (receipt, balance) = run (useATM ()) in
   balance = 45 &&
     receipt = Deposit (20, Deposit (30, ApplyInterest (Withdraw (10, EndOfTransaction))))

@@ -17,10 +17,10 @@ open Monads
  *)
 
 (* sujet
-let ( let* ) = failwith "NYI: bring me in scope!"
-let run = failwith "NYI: bring me in scope!"
+let ( let* ) _ _ = failwith "NYI: bring me in scope!"
+let run _ = failwith "NYI: bring me in scope!"
 
-let playGame = failwith "NYI"
+let playGame _ = failwith "NYI"
    /sujet *)
 
 (* corrige *)

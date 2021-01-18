@@ -8,17 +8,17 @@ module Make (Log: Monoid) = struct
 
   type 'a t = | (* NYI: bring me in scope! *)
 
-  let return = failwith "NYI: bring me in scope!"
+  let return _ = failwith "NYI: bring me in scope!"
 
-  let bind = failwith "NYI: bring me in scope!"
+  let bind _ _ = failwith "NYI: bring me in scope!"
 
-  let ( >>= ) = failwith "NYI: bring me in scope!"
+  let ( >>= ) _ _ = failwith "NYI: bring me in scope!"
 
-  let ( let* ) = failwith "NYI: bring me in scope!"
+  let ( let* ) _ _ = failwith "NYI: bring me in scope!"
 
-  let set = failwith "NYI: bring me in scope!"
+  let set _ = failwith "NYI: bring me in scope!"
 
-  let run = failwith "NYI: bring me in scope!"
+  let run _ = failwith "NYI: bring me in scope!"
 
      /sujet *)
 

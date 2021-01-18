@@ -63,7 +63,7 @@ let hcps t = run (hcpsaux t)
 (* /corrige *)
 
 (* sujet 
-let hcpsaux = failwith "NYI"
+let hcpsaux _ = failwith "NYI"
 
 let hcps t = run (hcpsaux t)
    /sujet*)

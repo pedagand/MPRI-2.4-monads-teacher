@@ -33,7 +33,7 @@ module State = struct
   type t = int
 
   (* TODO: should use an integral representation instead: manipulate 'balance * 100' *)
-  let computeInterest balance = int_of_float (float_of_int balance *. 1.1)
+  let compute_interest balance = int_of_float (float_of_int balance *. 1.1)
 
   (* sujet
   let rec act balance = failwith "NYI"
@@ -43,7 +43,7 @@ module State = struct
     | EndOfTransaction -> balance
     | Deposit (i, t) -> act (balance + i) t
     | Withdraw (i, t) -> act (balance - i) t
-    | ApplyInterest t -> act (computeInterest balance) t
+    | ApplyInterest t -> act (compute_interest balance) t
   (* /corrige *)
 
 end
@@ -57,7 +57,7 @@ let run _ = failwith "NYI: bring me in scope!"
 
 let deposit s = failwith "NYI"
 let withdraw s = failwith "NYI"
-let applyInterest () = failwith "NYI"
+let apply_interest () = failwith "NYI"
    /sujet*)
 
 (* corrige *)
@@ -66,17 +66,17 @@ open M
 
 let deposit s = set (Deposit (s, EndOfTransaction))
 let withdraw s = set (Withdraw (s, EndOfTransaction))
-let applyInterest () = set (ApplyInterest EndOfTransaction)
+let apply_interest () = set (ApplyInterest EndOfTransaction)
 (* /corrige *)
 
-let useATM () =
+let use_ATM () =
   let* _ = deposit 20 in
   let* _ = deposit 30 in
-  let* _ = applyInterest () in
+  let* _ = apply_interest () in
   let* _ = withdraw 10 in
   get ()
 
 let%test _ =
-  let (receipt, balance) = run (useATM ()) 0 in
+  let (receipt, balance) = run (use_ATM ()) 0 in
   balance = 45 &&
     receipt = Deposit (20, Deposit (30, ApplyInterest (Withdraw (10, EndOfTransaction))))

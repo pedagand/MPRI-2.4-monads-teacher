@@ -27,9 +27,9 @@ open Monads.Error
 
 let failure () = err (Failure "Ill-typed expression")
 
-let takeNat = function IsNat n -> return n | IsBool _ -> failure ()
+let take_nat = function IsNat n -> return n | IsBool _ -> failure ()
 
-let takeBool = function IsBool b -> return b | IsNat _ -> failure ()
+let take_bool = function IsBool b -> return b | IsNat _ -> failure ()
 
 let rec sem e =
   match e with
@@ -41,13 +41,13 @@ let rec sem e =
       return (IsBool (v1 = v2))
   | Plus (e1, e2) ->
       let* v1 = sem e1 in
-      let* n1 = takeNat v1 in
+      let* n1 = take_nat v1 in
       let* v2 = sem e2 in
-      let* n2 = takeNat v2 in
+      let* n2 = take_nat v2 in
       return (IsNat (n1 + n2))
   | Ifte (b, e1, e2) ->
       let* vb = sem b in
-      let* b = takeBool vb in
+      let* b = take_bool vb in
       if b then sem e1 else sem e2
 
 (* /corrige *)

@@ -21,7 +21,7 @@ let ( let* ) _ _ = failwith "NYI: bring me in scope!"
 let return _ = failwith "NYI: bring me in scope!"
 let run _ = failwith "NYI: bring me in scope!"
 
-let playGame _ = failwith "NYI"
+let play_game _ = failwith "NYI"
    /sujet *)
 
 (* corrige *)
@@ -32,7 +32,7 @@ end
 module M = State.Make(S)
 open M
 
-let playGame s = 
+let play_game s =
   let rec help i =
     if i >= String.length s then
       let* (_, score) = get () in
@@ -51,13 +51,13 @@ let playGame s =
   help 0
 (* /corrige *)
 
-let result s = run (playGame s) (false, 0)
+let result s = run (play_game s) (false, 0)
 
 let result2 s1 s2 =
   let p =
-    let* _ = playGame s1 in
+    let* _ = play_game s1 in
     (* State is kept between [s1] and [s2]! *)
-    let* score = playGame s2 in
+    let* score = play_game s2 in
     return score
   in
   run p (false, 0)

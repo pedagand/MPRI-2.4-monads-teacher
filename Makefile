@@ -1,5 +1,5 @@
 DST  := ../lecture-MPRI-2.4-monads-public
-ROOT := dune-project runtest.sh CONTRIBUTING.md data/README.md
+ROOT := dune-project .gitignore runtest.sh CONTRIBUTING.md data/README.md
 SRC  := $(shell git ls-files lib/ exercises/)
 
 .PHONY: export

@@ -5,28 +5,25 @@
   /sujet *)
 
 module Base = struct
-
   type 'a res =
     | Val of 'a * char list
     | Err
-  type 'a t = char list -> 'a  res
 
-  (* sujet 
-  let return a = failwith "NYI"
+  type 'a t = char list -> 'a res
 
-  let bind m f = failwith "NYI"
-     /sujet *)
+  (* sujet
+     let return a = failwith "NYI"
+
+     let bind m f = failwith "NYI"
+        /sujet *)
 
   (* corrige *)
-  let return x = fun toks -> Val (x, toks)
+  let return x toks = Val (x, toks)
 
-  let bind m f =
-    fun toks ->
-    match m toks with
-    | Err -> Err
-    | Val (x, toks') -> f x toks'
+  let bind m f toks =
+    match m toks with Err -> Err | Val (x, toks') -> f x toks'
+
   (* /corrige *)
-
 end
 
 module M = Monad.Expand (Base)
@@ -53,25 +50,19 @@ let run m toks = failwith "NYI"
  /sujet *)
 
 (* corrige *)
-let fail () = fun _ -> Err
+let fail () _ = Err
 
-let any () = function
-  | [] -> Err
-  | c :: toks' -> Val (c, toks')
+let any () = function [] -> Err | c :: toks' -> Val (c, toks')
 
-let empty () = function
-  | [] -> Val((), [])
-  | _ -> Err
+let empty () = function [] -> Val ((), []) | _ -> Err
 
-let either m1 m2 =
-  fun toks ->
-  match m1 toks with
-  | Err -> m2 toks
-  | Val(_, _) as res -> res
+let either m1 m2 toks =
+  match m1 toks with Err -> m2 toks | Val (_, _) as res -> res
 
-let run m toks = match m toks with
-  | Err -> failwith "Invalid input"
-  | Val (x, _) -> x
+
+let run m toks =
+  match m toks with Err -> failwith "Invalid input" | Val (x, _) -> x
+
 (* /corrige *)
 
 (* TODO: add a backtracking operator? *)

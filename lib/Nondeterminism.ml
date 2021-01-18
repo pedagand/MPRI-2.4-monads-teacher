@@ -6,23 +6,25 @@
 
 module Base = struct
   (* sujet
-  type 'a t = 'a list
-     /sujet *)
+     type 'a t = 'a list
+        /sujet *)
   (* corrige *)
   (* TODO: straightforward implementation is List, obviously *)
   type 'a t = 'a Seq.t
+
   (* /corrige *)
 
-  (* sujet 
-  let return a = failwith "NYI"
+  (* sujet
+     let return a = failwith "NYI"
 
-  let bind m f = failwith "NYI"
-     /sujet *)
+     let bind m f = failwith "NYI"
+        /sujet *)
 
   (* corrige *)
   let return a = Seq.return a
 
   let bind m f = Seq.flat_map f m
+
   (* /corrige *)
 end
 
@@ -41,11 +43,11 @@ let all m = failwith "NYI"
 
 (* corrige *)
 let fail () = Seq.empty
+
 let either a b = Seq.append a b
 
-let run m =
-  match m () with
-  | Seq.Nil -> failwith "Empty"
-  | Seq.Cons (a, _) -> a
+let run m = match m () with Seq.Nil -> failwith "Empty" | Seq.Cons (a, _) -> a
+
 let all m = m
+
 (* /corrige *)

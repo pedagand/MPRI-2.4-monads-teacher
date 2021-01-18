@@ -1,26 +1,23 @@
-module Make (Env: 
-               sig
-                 type t
-               end) : sig
+module Make (Env : sig
+  type t
+end) : sig
+  type 'a t
 
-type 'a t 
+  (* Structure *)
 
-(* Structure *)
+  val return : 'a -> 'a t
 
-val return : 'a -> 'a t
+  val bind : 'a t -> ('a -> 'b t) -> 'b t
 
-val bind : 'a t -> ('a -> 'b t) -> 'b t
+  val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
 
-val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
+  val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 
-val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
+  (* Operations *)
 
-(* Operations *)
+  val get : unit -> Env.t t
 
-val get : unit -> Env.t t
+  (* Runner *)
 
-(* Runner *)
-
-val run : 'a t -> Env.t -> 'a
-
+  val run : 'a t -> Env.t -> 'a
 end

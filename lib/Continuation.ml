@@ -4,46 +4,46 @@
 [@@@warning "-27-32-33-37-39"]
   /sujet *)
 
-module Make (Ans: 
-               sig
-                 type t
-               end) = struct
-
+module Make (Ans : sig
+  type t
+end) =
+struct
   module Base = struct
     type 'a t = ('a -> Ans.t) -> Ans.t
 
-    (* sujet 
-    let return a = failwith "NYI"
+    (* sujet
+       let return a = failwith "NYI"
 
-    let bind m f = failwith "NYI"
-       /sujet *)
+       let bind m f = failwith "NYI"
+          /sujet *)
 
     (* corrige *)
     let return a k = k a
 
     let bind m f k = m (fun v -> (f v) k)
+
     (* /corrige *)
   end
 
   module M = Monad.Expand (Base)
   include M
 
-  (* sujet 
-  let callcc f = failwith "NYI"
+  (* sujet
+     let callcc f = failwith "NYI"
 
-  let throw m k' = failwith "NYI"
+     let throw m k' = failwith "NYI"
 
-  let tfix mrec a = failwith "NYI"
+     let tfix mrec a = failwith "NYI"
 
-  let run m = failwith "NYI"
-     /sujet *)
-     
+     let run m = failwith "NYI"
+        /sujet *)
+
   (* corrige *)
-  let callcc f = fun k -> f k k
+  let callcc f k = f k k
 
-  let throw m k' = fun _ -> m k'
+  let throw m k' _ = m k'
 
   let run m = m (fun x -> x)
+
   (* /corrige *)
-                       
 end

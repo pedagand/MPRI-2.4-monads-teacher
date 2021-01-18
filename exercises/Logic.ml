@@ -7,9 +7,13 @@
 open Monads
 
 type bot = |
+
 type 'a not = 'a -> bot
 
-module M = Continuation.Make(struct type t = bot end)
+module M = Continuation.Make (struct
+  type t = bot
+end)
+
 open M
 
 (* sujet
@@ -17,8 +21,8 @@ let exfalso () = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-let bot_elim (b: bot) = match b with _ -> .
+let bot_elim (b : bot) = match b with _ -> .
 
-let exfalso () =
-  callcc (fun k -> bot_elim (k (Error (fun a -> k (Ok a)))))
+let exfalso () = callcc (fun k -> bot_elim (k (Error (fun a -> k (Ok a)))))
+
 (* /corrige *)

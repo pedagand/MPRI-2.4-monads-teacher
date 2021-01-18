@@ -13,9 +13,11 @@ val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t (* à la ML *)
 (* Operations *)
 
 val fail : unit -> 'a t
+
 val either : 'a t -> 'a t -> 'a t
 
 (* Runners *)
 
 val run : 'a t -> 'a
+
 val all : 'a t -> 'a Seq.t

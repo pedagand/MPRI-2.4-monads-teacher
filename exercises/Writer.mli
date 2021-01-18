@@ -3,26 +3,24 @@ open Monoid
 
 (* TODO: could I somehow reuse the definition in lib/Writer.mli? *)
 
-module Make (Log: Monoid) : sig
+module Make (Log : Monoid) : sig
+  type 'a t
 
-type 'a t
+  (* Structure *)
 
-(* Structure *)
+  val return : 'a -> 'a t
 
-val return : 'a -> 'a t
+  val bind : 'a t -> ('a -> 'b t) -> 'b t
 
-val bind : 'a t -> ('a -> 'b t) -> 'b t
+  val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
 
-val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
+  val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 
-val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
+  (* Operations *)
 
-(* Operations *)
+  val set : Log.t -> unit t
 
-val set : Log.t -> unit t
+  (* Runner *)
 
-(* Runner *)
-
-val run : 'a t -> Log.t * 'a
-
+  val run : 'a t -> Log.t * 'a
 end

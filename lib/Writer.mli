@@ -1,27 +1,27 @@
-module Make (Log: sig
-                 type t
-                 val empty : t
-                 val (<+>) : t -> t -> t
-               end) : sig
+module Make (Log : sig
+  type t
 
-type 'a t 
+  val empty : t
 
-(* Structure *)
+  val ( <+> ) : t -> t -> t
+end) : sig
+  type 'a t
 
-val return : 'a -> 'a t
+  (* Structure *)
 
-val bind : 'a t -> ('a -> 'b t) -> 'b t
+  val return : 'a -> 'a t
 
-val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
+  val bind : 'a t -> ('a -> 'b t) -> 'b t
 
-val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
+  val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
 
-(* Operations *)
+  val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 
-val set : Log.t -> unit t
+  (* Operations *)
 
-(* Runner *)
+  val set : Log.t -> unit t
 
-val run : 'a t -> Log.t * 'a
+  (* Runner *)
 
+  val run : 'a t -> Log.t * 'a
 end

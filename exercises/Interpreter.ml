@@ -53,6 +53,7 @@ let rec sem e =
       let* b = take_bool vb in
       if b then sem e1 else sem e2
 
+
 (* /corrige *)
 
 (** * Tests *)
@@ -71,7 +72,6 @@ let%test _ = run (sem (Eq (Val (IsNat 42), Val (IsNat 3)))) = IsBool false
 let%test _ =
   (* Alternatively: one could have an exception *)
   run (sem (Eq (Val (IsNat 42), Val (IsBool false)))) = IsBool false
-
 
 let%test _ = run (sem (Plus (Val (IsNat 42), Val (IsNat 3)))) = IsNat 45
 
@@ -94,16 +94,20 @@ let%test _ =
 
 let%test _ =
   try
-    ignore(run (sem (Plus (Val (IsBool true), Val (IsNat 3)))));
+    ignore (run (sem (Plus (Val (IsBool true), Val (IsNat 3))))) ;
     false
   with
-  | IllTyped -> true
-  | _ -> false
+  | IllTyped ->
+      true
+  | _ ->
+      false
 
 let%test _ =
   try
-    ignore (run (sem (Ifte (Val (IsNat 3), Val (IsNat 42), Val (IsNat 44)))));
+    ignore (run (sem (Ifte (Val (IsNat 3), Val (IsNat 42), Val (IsNat 44))))) ;
     false
   with
-  | IllTyped -> true
-  | _ -> false
+  | IllTyped ->
+      true
+  | _ ->
+      false

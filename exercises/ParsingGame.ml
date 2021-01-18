@@ -25,30 +25,38 @@ let play_game _ = failwith "NYI"
    /sujet *)
 
 (* corrige *)
-module S = struct 
+module S = struct
   type t = bool * int
 end
 
-module M = State.Make(S)
+module M = State.Make (S)
 open M
 
 let play_game s =
   let rec help i =
-    if i >= String.length s then
-      let* (_, score) = get () in
+    if i >= String.length s
+    then
+      let* _, score = get () in
       return score
     else
-      let* (status, score) = get () in
-      let x = String.get s i in
-      let* _ = match x with
-        | 'a' when status -> set (status, score + 1)
-        | 'b' when status -> set (status, score - 1)
-        | 'c' -> set (not status, score)
-        | _ -> return ()
+      let* status, score = get () in
+      let x = s.[i] in
+      let* _ =
+        match x with
+        | 'a' when status ->
+            set (status, score + 1)
+        | 'b' when status ->
+            set (status, score - 1)
+        | 'c' ->
+            set (not status, score)
+        | _ ->
+            return ()
       in
-      help (i+1)
+      help (i + 1)
   in
   help 0
+
+
 (* /corrige *)
 
 let result s = run (play_game s) (false, 0)
@@ -62,10 +70,15 @@ let result2 s1 s2 =
   in
   run p (false, 0)
 
+
 let%test _ = result "ab" = 0
+
 let%test _ = result "ca" = 1
+
 let%test _ = result "cabca" = 0
+
 let%test _ = result "abcaaacbbcabbab" = 2
 
 let%test _ = result2 "ab" "ca" = 1
+
 let%test _ = result2 "ca" "abcaaacbbcabbab" = -1

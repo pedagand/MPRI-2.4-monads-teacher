@@ -18,7 +18,7 @@ module type FullMonad = sig
      - Left identity:   `bind (return a) f = f a`
      - Right identity: 	`bind m return     = m`
      - Associativity: 	`bind (bind m f) g = bind m (fun x -> bind (f x) g)`
-   *)
+  *)
 
   (* Alternative namings: *)
   val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t (* à la Haskell *)
@@ -29,4 +29,4 @@ module type FullMonad = sig
   val join : 'a t t -> 'a t
 end
 
-module Expand : functor (M : Monad) -> FullMonad with type 'a t = 'a M.t 
+module Expand : functor (M : Monad) -> FullMonad with type 'a t = 'a M.t

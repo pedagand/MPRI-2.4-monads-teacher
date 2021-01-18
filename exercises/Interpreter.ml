@@ -65,6 +65,11 @@ let%test _ =
 
 let%test _ = run (sem (Eq (Val (IsNat 42), Val (IsNat 3)))) = IsBool false
 
+let%test _ =
+  (* Alternatively: one could have an exception *)
+  run (sem (Eq (Val (IsNat 42), Val (IsBool false)))) = IsBool false
+
+
 let%test _ = run (sem (Plus (Val (IsNat 42), Val (IsNat 3)))) = IsNat 45
 
 let%test _ =

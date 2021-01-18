@@ -46,12 +46,19 @@ let [@warning "-32"]  pp (addr, perm, offset, device, inode, path) =
 (******************************************************************)
 
 (* sujet
+let symbol c = failwith "NYI"
+
 let rec oneOf l = failwith "NYI"
 
 let hexDigit = failwith "NYI"
    /sujet *)
 
 (* corrige *)
+let symbol c =
+  let* c' = any () in
+  if c = c' then return ()
+  else fail ()
+
 let rec oneOf l = match l with
   | [] -> fail ()
   | c :: l -> either (let* _ = symbol c in return c) (oneOf l)
@@ -60,10 +67,42 @@ let hexDigit =
   oneOf hexCharset
 (* /corrige *)
 
+let%test _ = run (symbol 'c') ['c'] = ()
+let%test _ = try ignore(run (symbol 'c') ['d']); false with | _ -> true
+
 let%test _ = List.for_all (fun c -> run hexDigit [c] = c) hexCharset
 let%test _ =
   try ignore(run hexDigit ['A']); false  with
   | _ -> true
+
+
+(* sujet
+let rec star m = failwith "NYI"
+and plus m = failwith "NYI"
+   /sujet *)
+
+(* corrige *)
+let rec star m =
+  either
+    (plus m)
+    (return [])
+and plus m =
+  let* x = m in
+  let* y = star m in
+  return (x :: y)
+(* /corrige *)
+
+let%test _ = run (plus (symbol 'a')) ['a'; 'b'] = [()]
+
+let%test _ = run (plus (symbol 'a')) ['a'; 'a'; 'b'] = [(); ()]
+
+let%test _ = try ignore(run (plus (symbol 'a')) ['b'; 'a'; 'b']); false with _ -> true
+
+let%test _ = run (star (symbol 'a')) ['a'; 'b'] = [()]
+
+let%test _ = run (star (symbol 'a')) ['a'; 'a'; 'b'] = [(); ()]
+
+let%test _ = run (star (symbol 'a')) ['b'; 'a'; 'b'] = []
 
 let%test _ =
   let ex = ['0'; '8'; '0'; '5'; '8'; '0'; '0'; '0'] in

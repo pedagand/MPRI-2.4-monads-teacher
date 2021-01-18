@@ -63,32 +63,11 @@ let empty () = function
   | [] -> Val((), [])
   | _ -> Err
 
-let symbol c =
-   fun toks ->
-      match toks with
-      | c' :: toks' when c' = c -> Val((), toks')
-      | _ -> Err
-
-
 let either m1 m2 =
   fun toks ->
   match m1 toks with
   | Err -> m2 toks
   | Val(_, _) as res -> res
-
-let optionally m =
-  either
-    (let* x = m in return (Some x))
-    (return None)
-
-let rec star m =
-  either
-    (plus m)
-    (return [])
-and plus m =
-  let* x = m in
-  let* y = star m in
-  return (x :: y)
 
 let run m toks = match m toks with
   | Err -> failwith "Invalid input"

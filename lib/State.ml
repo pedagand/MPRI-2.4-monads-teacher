@@ -4,15 +4,14 @@
 [@@@warning "-27-32-33-37-39"]
   /sujet *)
 
-module Make (S: sig 
+module Make (S: sig
                  type t
-                 val init : t
                end) = struct
 
   module State = struct
     type 'a t = S.t -> 'a * S.t
 
-    (* sujet 
+    (* sujet
     let return a = failwith "NYI"
 
     let bind m f = failwith "NYI"
@@ -28,11 +27,11 @@ module Make (S: sig
   module M = Monad.Expand (State)
   include M
 
-  (* sujet 
+  (* sujet
   let get () s = failwith "NYI"
 
   let set x _ = failwith "NYI"
-            
+
   let run m = failwith "NYI"
    /sujet *)
 
@@ -40,7 +39,7 @@ module Make (S: sig
   let get () s = (s, s)
 
   let set x _ = ((), x)
-            
-  let run m = match m S.init with x, _ -> x
+
+  let run m s0 = match m s0 with x, _ -> x
   (* /corrige *)
 end

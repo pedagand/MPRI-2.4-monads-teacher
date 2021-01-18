@@ -18,6 +18,7 @@ open Monads
 
 (* sujet
 let ( let* ) _ _ = failwith "NYI: bring me in scope!"
+let return _ = failwith "NYI: bring me in scope!"
 let run _ = failwith "NYI: bring me in scope!"
 
 let playGame _ = failwith "NYI"
@@ -26,7 +27,6 @@ let playGame _ = failwith "NYI"
 (* corrige *)
 module S = struct 
   type t = bool * int
-  let init = (false, 0)
 end
 
 module M = State.Make(S)
@@ -51,9 +51,21 @@ let playGame s =
   help 0
 (* /corrige *)
 
-let result s = run (playGame s)
+let result s = run (playGame s) (false, 0)
+
+let result2 s1 s2 =
+  let p =
+    let* _ = playGame s1 in
+    (* State is kept between [s1] and [s2]! *)
+    let* score = playGame s2 in
+    return score
+  in
+  run p (false, 0)
 
 let%test _ = result "ab" = 0
 let%test _ = result "ca" = 1
 let%test _ = result "cabca" = 0
 let%test _ = result "abcaaacbbcabbab" = 2
+
+let%test _ = result2 "ab" "ca" = 1
+let%test _ = result2 "ca" "abcaaacbbcabbab" = -1

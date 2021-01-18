@@ -1,6 +1,5 @@
 module Make (S: sig
                  type t
-                 val init : t
                end) : sig
 
 type 'a t 
@@ -23,6 +22,6 @@ val set : S.t -> unit t
 
 (* Runner *)
 
-val run : 'a t -> 'a
+val run : 'a t -> S.t -> 'a
 
 end

@@ -32,8 +32,6 @@ module State = struct
   type m = Transaction.t
   type t = int
 
-  let init = 0
-
   (* TODO: should use an integral representation instead: manipulate 'balance * 100' *)
   let computeInterest balance = int_of_float (float_of_int balance *. 1.1)
 
@@ -79,6 +77,6 @@ let useATM () =
   get ()
 
 let%test _ =
-  let (receipt, balance) = run (useATM ()) in
+  let (receipt, balance) = run (useATM ()) 0 in
   balance = 45 &&
     receipt = Deposit (20, Deposit (30, ApplyInterest (Withdraw (10, EndOfTransaction))))

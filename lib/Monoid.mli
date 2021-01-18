@@ -7,6 +7,5 @@ end
 module type MonoidAction = sig
   type m
   type t
-  val init : t
   val act : t -> m -> t
 end

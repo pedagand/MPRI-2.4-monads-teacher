@@ -6,7 +6,6 @@
 
 module Make (Env: sig
                  type t
-                 val init : t
                end) = struct
 
   module Base = struct
@@ -37,7 +36,7 @@ module Make (Env: sig
   (* corrige *)
   let get () = fun e -> e
 
-  let run m = m Env.init
+  let run m init = m init
   (* /corrige *)
 
 end

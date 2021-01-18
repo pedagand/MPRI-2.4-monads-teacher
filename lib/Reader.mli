@@ -1,7 +1,6 @@
 module Make (Env: 
                sig
                  type t
-                 val init : t
                end) : sig
 
 type 'a t 
@@ -22,6 +21,6 @@ val get : unit -> Env.t t
 
 (* Runner *)
 
-val run : 'a t -> 'a
+val run : 'a t -> Env.t -> 'a
 
 end

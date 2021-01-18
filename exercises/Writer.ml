@@ -27,12 +27,13 @@ module Make (Log: Monoid) = struct
     type t = unit
     type m = Log.t
 
-    let init = ()
     let act _ _ = ()
   end
 
   module M = Update.Make(Log)(A)
   include M
+
+  let run a = M.run a ()
   (* /corrige *)
 
 end

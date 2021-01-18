@@ -24,6 +24,6 @@ val set : P.t -> unit t
 
 (* Runner *)
 
-val run : 'a t -> P.t * 'a
+val run : 'a t -> S.t -> P.t * 'a
 
 end

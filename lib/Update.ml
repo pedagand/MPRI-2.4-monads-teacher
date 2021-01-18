@@ -49,7 +49,7 @@ module Make
 
   let set p = fun _ -> (p, ())
 
-  let run m = m S.init
+  let run m init = m init
   (* /corrige *)
 
 end

@@ -3,7 +3,7 @@ module Make (Ans:
                  type t
                end) : sig
 
-type 'a t
+type 'a t = ('a -> Ans.t) -> Ans.t
 
 (* Structure *)
 
@@ -20,8 +20,6 @@ val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 val callcc : (('a -> Ans.t) -> 'a t) -> 'a t
 
 val throw : 'a t -> ('a -> Ans.t) -> 'a t
-
-val tfix : (('a -> 'b t) -> ('a -> 'b t)) -> 'a -> 'b t (* tail-recursive fixpoint *)
 
 (* Runner *)
 

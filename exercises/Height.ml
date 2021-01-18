@@ -52,13 +52,12 @@ let%test _ =
   let res = try hcpsnaive (make_list 1000000) with _ -> -1
   in res = -1
 
-let hcpsaux hcpsrec (t: tree) : int t = match t with
+let rec hcpsaux (t: tree) : int t = match t with
   | E -> return 0
-  | N (l, r) -> let* hl = hcpsrec l in
-                let* hr = hcpsrec r in
+  | N (l, r) -> let* _ = return () in (* XXX: force an eta-expansion *)
+                let* hl = hcpsaux l in
+                let* hr = hcpsaux r in
                 return (1 + max hl hr)
-
-let hcpsaux = tfix hcpsaux
 
 let hcps t = run (hcpsaux t)
 (* /corrige *)

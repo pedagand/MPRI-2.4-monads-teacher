@@ -27,7 +27,6 @@ module Make (Ans:
 
   module M = Monad.Expand (Base)
   include M
-  open Base
 
   (* sujet 
   let callcc f = failwith "NYI"
@@ -43,10 +42,6 @@ module Make (Ans:
   let callcc f = fun k -> f k k
 
   let throw m k' = fun _ -> m k'
-
-  let rec tfix mrec a : 'b t =
-    (* XXX: it seems that I need to eta-expand here or it will not do tailrec, why? *)
-    fun k -> mrec (tfix mrec) a k
 
   let run m = m (fun x -> x)
   (* /corrige *)

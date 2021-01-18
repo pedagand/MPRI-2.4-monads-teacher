@@ -6,7 +6,7 @@
 
 module Base = struct
   type 'a t =
-    | Val of 'a
+    | OK of 'a
     | Err of exn
 
   (* sujet 
@@ -16,9 +16,9 @@ module Base = struct
      /sujet *)
 
   (* corrige *)
-  let return a = Val a
+  let return a = OK a
 
-  let bind m f = match m with Err e -> Err e | Val x -> f x
+  let bind m f = match m with Err e -> Err e | OK x -> f x
   (* /corrige *)
 end
 
@@ -37,7 +37,7 @@ let run m = failwith "NYI"
 (* corrige *)
 let err e = Err e
 
-let try_with_finally m ks kf = match m with Val x -> ks x | Err e -> kf e
+let try_with_finally m ks kf = match m with OK x -> ks x | Err e -> kf e
 
-let run m = match m with Val x -> x | Err _ -> failwith "Uncaught exception"
+let run m = match m with OK x -> x | Err _ -> failwith "Uncaught exception"
 (* /corrige *)

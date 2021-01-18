@@ -44,7 +44,7 @@ let playGame s =
         | 'a' when status -> set (status, score + 1)
         | 'b' when status -> set (status, score - 1)
         | 'c' -> set (not status, score)
-        | _ -> set (status, score)
+        | _ -> return ()
       in
       help (i+1)
   in

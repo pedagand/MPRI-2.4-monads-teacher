@@ -10,6 +10,6 @@ echo "Selectively run tests for $FILENAME"
     exercises                                                                       \
     -source-tree-root ..                                                            \
     -only-test $1
-if [[ $? -eq 0 ]]; then
+if [ $? -eq 0 ]; then
     echo "OK"
 fi

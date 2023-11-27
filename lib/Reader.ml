@@ -31,12 +31,14 @@ struct
   (* sujet
      let get () = failwith "NYI"
 
+     let local e m = failwith "NYI"
+
      let run m = failwith "NYI"
         /sujet *)
 
   (* corrige *)
   let get () e = e
-
+  let local e m _ = m e
   let run m init = m init
 
   (* /corrige *)

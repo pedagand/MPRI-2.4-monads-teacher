@@ -16,6 +16,7 @@ end) : sig
   (* Operations *)
 
   val get : unit -> Env.t t
+  val local : Env.t -> 'a t -> 'a t
 
   (* Runner *)
 

@@ -2,35 +2,48 @@
 
 ## Setup
 
-This project needs `dune` and `ppx_inline_test` to build. You can get
-them through
+Install [Opam](https://opam.ocaml.org/doc/Install.html), the OCaml
+package manager, on your system. If you have never used Opam before,
+you need to initialize it (otherwise, skip this step):
 
-    opam install dune.2.7 ppx_inline_test
+```
+$ opam init
+```
 
-KNOWN ISSUE: the integration of `ppx_inline_test` and merlin is known
-to cause problem if you're using `ocaml-migrate-parsetree > 1.8.0`. Do
+For convenience, we suggest setting a
+[local](https://opam.ocaml.org/blog/opam-local-switches/) Opam
+distribution, using the following commands:
 
-    opam install ocaml-migrate-parsetree.1.8.0
-
-to resolve this issue (and restart merlin).
+```
+$ opam switch create . --deps-only --with-doc --with-test
+$ eval $(opam env)
+```
 
 ## Development
 
 Once your programming environment is setup, you can build the project with
 
-    dune build
+```
+$ dune build
+```
 
 You can also build and run the test suite with
 
-    dune runtest
+```
+$ dune runtest
+```
 
 If you want to run individual tests, use
 
-    ./runtest.sh exercices/Bank.ml
+```
+./runtest.sh exercices/Bank.ml
+```
 
 to only run the inline tests in the file `exercices/Bank.ml`, or
 
-    ./runtest.sh exercices/Bank.ml:60
+```
+./runtest.sh exercices/Bank.ml:60
+```
 
 to only run the inline test defined at line 60 in the file
 `exercices/Bank.ml`.

@@ -22,7 +22,7 @@ let make_list =
 
 let%test _ =
   (* Note: [height] is not tail-rec *)
-  let res = try height (make_list 1000000) with _ -> -1 in
+  let res = try height (make_list 100000000) with _ -> -1 in
   res = -1
 
 module M = Continuation.Make (struct
@@ -49,7 +49,7 @@ let%test _ = hcpsnaive (make_list 100) = 100
 let%test _ = hcpsnaive (make_list 10000) = 10000
 
 let%test _ =
-  let res = try hcpsnaive (make_list 1000000) with _ -> -1 in
+  let res = try hcpsnaive (make_list 100000000) with _ -> -1 in
   res = -1
 
 let rec hcpsaux (t : tree) : int t =
@@ -77,3 +77,4 @@ let%test _ = hcps (N (E, E)) = 1
 let%test _ = hcps (make_list 100) = 100
 let%test _ = hcps (make_list 10000) = 10000
 let%test _ = hcps (make_list 1000000) = 1000000
+let%test _ = hcps (make_list 100000000) = 100000000

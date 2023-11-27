@@ -24,7 +24,6 @@ module Make (Log : Monoid) = struct
   (* corrige *)
   module A = struct
     type t = unit
-
     type m = Log.t
 
     let act _ _ = ()

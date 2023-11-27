@@ -1,8 +1,8 @@
 (* sujet
-(* Once you are done writing the code, remove this directive,
-   whose purpose is to disable several warnings. *)
-[@@@warning "-32-33"]
-  /sujet *)
+   (* Once you are done writing the code, remove this directive,
+      whose purpose is to disable several warnings. *)
+   [@@@warning "-32-33"]
+     /sujet *)
 
 open Monads
 
@@ -36,17 +36,14 @@ struct
     type t = unit
 
     let empty = ()
-
     let ( <+> ) _ _ = ()
   end
 
   module Action = struct
     type m = Monoid.t
-
     type t = Env.t
 
     let init = Env.init
-
     let act x () = x
   end
 

@@ -1,10 +1,10 @@
 open Monoid
 
 (* sujet
-(* Once you are done writing the code, remove this directive,
-   whose purpose is to disable several warnings. *)
-[@@@warning "-27-32-33-37-39"]
-  /sujet *)
+   (* Once you are done writing the code, remove this directive,
+      whose purpose is to disable several warnings. *)
+   [@@@warning "-27-32-33-37-39"]
+     /sujet *)
 
 module Make (P : Monoid) (S : MonoidAction with type m = P.t) = struct
   module Base = struct
@@ -43,9 +43,7 @@ module Make (P : Monoid) (S : MonoidAction with type m = P.t) = struct
 
   (* corrige *)
   let get () s = (P.empty, s)
-
   let set p _ = (p, ())
-
   let run m init = m init
 
   (* /corrige *)

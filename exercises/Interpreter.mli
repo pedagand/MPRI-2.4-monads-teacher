@@ -1,8 +1,6 @@
 open Monads
 
-type value =
-  | IsNat of int
-  | IsBool of bool
+type value = IsNat of int | IsBool of bool
 
 type exp =
   | Val of value

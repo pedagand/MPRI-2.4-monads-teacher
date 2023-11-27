@@ -2,7 +2,6 @@ module type Monad = sig
   type 'a t
 
   val return : 'a -> 'a t
-
   val bind : 'a t -> ('a -> 'b t) -> 'b t
 end
 
@@ -10,7 +9,6 @@ module type FullMonad = sig
   type 'a t
 
   val return : 'a -> 'a t
-
   val bind : 'a t -> ('a -> 'b t) -> 'b t
 
   (* Subject to the following laws:
@@ -22,7 +20,6 @@ module type FullMonad = sig
 
   (* Alternative namings: *)
   val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t (* à la Haskell *)
-
   val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t (* à la ML *)
 
   (* Categorical presentation: *)

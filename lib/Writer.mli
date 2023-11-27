@@ -2,7 +2,6 @@ module Make (Log : sig
   type t
 
   val empty : t
-
   val ( <+> ) : t -> t -> t
 end) : sig
   type 'a t
@@ -10,11 +9,8 @@ end) : sig
   (* Structure *)
 
   val return : 'a -> 'a t
-
   val bind : 'a t -> ('a -> 'b t) -> 'b t
-
   val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
-
   val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
 
   (* Operations *)

@@ -1,8 +1,8 @@
 (* sujet
-(* Once you are done writing the code, remove this directive,
-   whose purpose is to disable several warnings. *)
-[@@@warning "-27-32-33-37-39"]
-  /sujet *)
+   (* Once you are done writing the code, remove this directive,
+      whose purpose is to disable several warnings. *)
+   [@@@warning "-27-32-33-37-39"]
+     /sujet *)
 
 module Make (Env : sig
   type t
@@ -19,7 +19,6 @@ struct
 
     (* corrige *)
     let return x _ = x
-
     let bind m f e = f (m e) e
 
     (* /corrige *)

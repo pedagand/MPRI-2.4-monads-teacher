@@ -1,5 +1,5 @@
 DST  := ../lecture-MPRI-2.4-monads-public
-ROOT := dune-project .gitignore .ocamlformat runtest.sh CONTRIBUTING.md data/README.md
+ROOT := dune-project .gitlab-ci.yml .gitignore .ocamlformat runtest.sh CONTRIBUTING.md mpri24-monads.opam data/README.md
 SRC  := $(shell git ls-files lib/ exercises/)
 
 .PHONY: export
